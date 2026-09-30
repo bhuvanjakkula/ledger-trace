@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: ledgertrace-api
+    env: python
+    rootDir: backend
+    buildCommand: pip install .
+    startCommand: |
+      mkdir -p data
+      python -m alembic upgrade head
+      python -m uvicorn ledgertrace.api.main:app --host 0.0.0.0 --port 
+    disk:
+      name: ledgertrace-data
+      mountPath: /opt/render/project/src/data
+      sizeGB: 1
+    envVars:
+      - key: LEDGERTRACE_DATABASE_URL
+        value: sqlite:////opt/render/project/src/data/ledgertrace.db
+      - key: LEDGERTRACE_DATA_DIR
+        value: /opt/render/project/src/data/jobs
+      - key: PYTHON_VERSION
+        value: 3.12.0
