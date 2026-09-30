@@ -20,4 +20,4 @@ testpaths = ["tests"]
 pythonpath = ["."]
 
 [tool.vercel]
-entrypoint = "main.py"
+entrypoint = "main:app"
